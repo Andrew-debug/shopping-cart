@@ -1,43 +1,55 @@
-import Header from "./Header";
 import { useState } from "react";
-import { Card } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material";
+/////////
+import data from "../data.json";
+import Header from "./Header";
+import MainContent from "./MainContent";
+import Sidebar from "./Sidebar";
 
-import ProductPoup from "./ProductPopup";
-import data from '../data.json'
+const light = {
+  palette: {
+    mode: "light",
+    primary: {
+      main: "#fff",
+    },
+    secondary: {
+      main: "#2264d1",
+    },
+  },
+};
 
-function ProductCard({ product }) { // mock
-  const [open, setOpen] = useState(false);
+const dark = {
+  palette: {
+    mode: "dark",
+    secondary: {
+      main: "#fff",
+    },
+  },
+};
 
-  const handleClickOpen = () => setOpen(true)
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <div>
-      <Card
-        onClick={handleClickOpen}
-        style={{
-          height: 100,
-          width: 100
-        }}>
-        {JSON.stringify(product)}
-      </Card>
-      <ProductPoup
-        product={product}
-        onClose={handleClose}
-        open={open}
-      />
-    </div>
-  );
+const allDataCategories = [];
+for (const i in data.products) {
+  allDataCategories.push(data.products[i].category);
 }
+const categories = new Set(allDataCategories);
+
+const objCategories = {};
+for (const key of categories) {
+  objCategories[key] = false;
+}
+
 function App() {
+  const [lightTheme, setlightTheme] = useState(true);
+  const [filters, setfilters] = useState({ ...objCategories });
+
   return (
-    <>
-      <Header />
-      <ProductCard product={data['products'][0]} />
-    </>
+    <ThemeProvider theme={lightTheme ? createTheme(light) : createTheme(dark)}>
+      <Header lightTheme={lightTheme} setlightTheme={setlightTheme} />
+      <div style={{ display: "flex" }}>
+        <Sidebar filters={filters} setfilters={setfilters} />
+        <MainContent products={data.products} filters={filters} />
+      </div>
+    </ThemeProvider>
   );
 }
 

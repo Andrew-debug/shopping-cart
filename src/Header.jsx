@@ -1,142 +1,109 @@
-import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
+import {
+  Button,
+  OutlinedInput,
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  InputAdornment,
+  CssBaseline,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import logo from "./assets/images/Logo.png";
-import { Button } from "@mui/material";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+//////////
+import logoDark from "./assets/images/LogoDark.png";
+import logoLight from "./assets/images/logoLight.png";
 
-//TODO: rewrtie all iwth miu ui themes
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
+const centerFlex = {
   display: "flex",
-  alignItems: "center",
   justifyContent: "center",
-}));
+  alignItems: "center",
+};
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-}));
-
-export default function Header() {
+export default function Header({ lightTheme, setlightTheme }) {
+  const themeHandleClick = () => {
+    setlightTheme((prev) => !prev);
+  };
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="static"
-        sx={{ backgroundColor: "#fff", color: "#000", boxShadow: "none" }}
-      >
-        <Toolbar
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Box
+    <>
+      <CssBaseline />
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static" sx={{ boxShadow: "none" }}>
+          <Toolbar
             sx={{
-              display: "flex",
-              alignItems: "center",
+              ...centerFlex,
               justifyContent: "space-between",
             }}
           >
-            <img src={logo} alt="" />
-            <Typography textAlign="center" sx={{ mx: 2 }}>
-              Sell on Shopka
-            </Typography>
-            <Typography textAlign="center" sx={{ mx: 2 }}>
-              Register
-            </Typography>
-          </Box>
+            <Box
+              sx={{
+                ...centerFlex,
+                justifyContent: "space-between",
+              }}
+            >
+              <img src={lightTheme ? logoLight : logoDark} alt="" />
+              <Typography sx={{ mx: 2 }}>Sell on Shopka</Typography>
+              <Typography sx={{ mx: 2 }}>Register</Typography>
+            </Box>
 
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Search sx={{ borderRadius: "20px", backgroundColor: "#ededf0" }}>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
+            <Box sx={centerFlex}>
+              <OutlinedInput
+                size="small"
+                fullWidth={true}
+                sx={{ borderRadius: 4 }}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                }
               />
-            </Search>
-            <Typography textAlign="center" sx={{ mx: 2, color: "#2264d1" }}>
-              Consumer Electronix
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Button
-              variant="outlined"
-              sx={{
-                mr: 4,
-                color: "#2264d1",
-                fontSize: "0.9rem",
-                fontWeight: 600,
-                textTransform: "none",
-              }}
-            >
-              Sign in
-            </Button>
-            <Button
-              variant="outlined"
-              sx={{
-                mr: 4,
-                color: "#2264d1",
-                fontSize: "0.9rem",
-                fontWeight: 600,
-                textTransform: "none",
-              }}
-            >
-              My cart
-            </Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
-    </Box>
+              <Typography textAlign="center" sx={{ width: "300px", mx: 2 }}>
+                Consumer Electronix
+              </Typography>
+              {!lightTheme ? (
+                <Button
+                  sx={{
+                    ":hover": {
+                      bgcolor: "rgba(34,100,209, 0.1)",
+                    },
+                  }}
+                  onClick={themeHandleClick}
+                >
+                  <LightModeIcon color="secondary" />
+                </Button>
+              ) : (
+                <Button
+                  sx={{
+                    ":hover": {
+                      bgcolor: "rgba(255,255,255,0.1)",
+                    },
+                  }}
+                  onClick={themeHandleClick}
+                >
+                  <DarkModeIcon color="secondary" />
+                </Button>
+              )}
+            </Box>
+            <Box sx={centerFlex}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ mr: 2, fontWeight: "600" }}
+              >
+                Sign in
+              </Button>
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ mr: 2, fontWeight: "600" }}
+              >
+                My cart
+              </Button>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </>
   );
 }
