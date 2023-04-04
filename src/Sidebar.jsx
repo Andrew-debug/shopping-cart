@@ -15,24 +15,27 @@ export default function Sidebar({ filters, setfilters, sort, setSort }) {
     >
       <div style={{ borderBottom: "solid 1px black" }}>
         <h3 style={{ padding: "5px 70px" }}>Categories:</h3>
-        {Object.entries(filters).map(function ([key, value], index) {
-          return (
-            <Box key={index}>
-              <Checkbox
-                checked={value}
-                onChange={() => {
-                  setfilters((prevState) => {
-                    return {
-                      ...prevState,
-                      [key]: !value,
-                    };
-                  });
-                }}
-              ></Checkbox>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </Box>
-          );
-        })}
+        {Object.entries(filters)
+          .sort()
+          .map(function ([key, value], index) {
+            return (
+              <Box key={index}>
+                <Checkbox
+                  checked={value}
+                  color="secondary"
+                  onChange={() => {
+                    setfilters((prevState) => {
+                      return {
+                        ...prevState,
+                        [key]: !value,
+                      };
+                    });
+                  }}
+                ></Checkbox>
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+              </Box>
+            );
+          })}
       </div>
       {/* <Box sx={{ minWidth: 120 }}>
         <Typography>Sort Order</Typography>

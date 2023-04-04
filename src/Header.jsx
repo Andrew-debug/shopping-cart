@@ -14,20 +14,39 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 //////////
 import logoDark from "./assets/images/LogoDark.png";
 import logoLight from "./assets/images/logoLight.png";
-
+import ShoppingCart from "./ShoppingCart";
+import { useState } from "react";
 const centerFlex = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
 };
 
-export default function Header({ lightTheme, setlightTheme }) {
+export default function Header({
+  lightTheme,
+  setlightTheme,
+  setsearch,
+  cartContent,
+  setcartContent,
+}) {
   const themeHandleClick = () => {
     setlightTheme((prev) => !prev);
+  };
+  const [openCart, setopenCart] = useState(false);
+  const handleClickOpenCart = () => setopenCart(true);
+
+  const handleCloseCart = () => {
+    setopenCart(false);
   };
   return (
     <>
       <CssBaseline />
+      <ShoppingCart
+        cartContent={cartContent}
+        setcartContent={setcartContent}
+        onClose={handleCloseCart}
+        openCart={openCart}
+      />
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" sx={{ boxShadow: "none" }}>
           <Toolbar
@@ -51,7 +70,11 @@ export default function Header({ lightTheme, setlightTheme }) {
               <OutlinedInput
                 size="small"
                 fullWidth={true}
-                sx={{ borderRadius: 4 }}
+                sx={{
+                  borderRadius: 4,
+                  bgcolor: lightTheme ? "#ededf0" : "#121212",
+                }}
+                onChange={(e) => setsearch(e.target.value)}
                 startAdornment={
                   <InputAdornment position="start">
                     <SearchIcon />
@@ -87,16 +110,19 @@ export default function Header({ lightTheme, setlightTheme }) {
             </Box>
             <Box sx={centerFlex}>
               <Button
+                className="header-button"
                 variant="outlined"
                 color="secondary"
-                sx={{ mr: 2, fontWeight: "600" }}
+                sx={{ mr: 2, fontWeight: "600", textTransform: "none" }}
               >
                 Sign in
               </Button>
               <Button
+                className="header-button"
                 variant="outlined"
                 color="secondary"
-                sx={{ mr: 2, fontWeight: "600" }}
+                sx={{ mr: 2, fontWeight: "600", textTransform: "none" }}
+                onClick={handleClickOpenCart}
               >
                 My cart
               </Button>

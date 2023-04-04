@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 
-function ProductPopup({ product, onClose, open }) {
+function ProductPopup({ product, onClose, open, setcartContent }) {
   return (
     <Dialog onClose={onClose} open={open}>
       <img src={product.images[0]} />
@@ -26,7 +26,12 @@ function ProductPopup({ product, onClose, open }) {
         <Typography>{product.description}</Typography>
       </DialogContent>
       <DialogActions>
-        <Button>Add to cart</Button>
+        <Button
+          color="secondary"
+          onClick={() => setcartContent((prev) => [...prev, product])}
+        >
+          Add to cart
+        </Button>
       </DialogActions>
     </Dialog>
   );

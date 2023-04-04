@@ -41,13 +41,25 @@ for (const key of categories) {
 function App() {
   const [lightTheme, setlightTheme] = useState(true);
   const [filters, setfilters] = useState({ ...objCategories });
-
+  const [search, setsearch] = useState("");
+  const [cartContent, setcartContent] = useState([]);
   return (
     <ThemeProvider theme={lightTheme ? createTheme(light) : createTheme(dark)}>
-      <Header lightTheme={lightTheme} setlightTheme={setlightTheme} />
+      <Header
+        lightTheme={lightTheme}
+        setlightTheme={setlightTheme}
+        setsearch={setsearch}
+        cartContent={cartContent}
+        setcartContent={setcartContent}
+      />
       <div style={{ display: "flex" }}>
         <Sidebar filters={filters} setfilters={setfilters} />
-        <MainContent products={data.products} filters={filters} />
+        <MainContent
+          products={data.products}
+          filters={filters}
+          search={search}
+          setcartContent={setcartContent}
+        />
       </div>
     </ThemeProvider>
   );

@@ -1,127 +1,89 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import CardMedia from "@mui/material/CardMedia";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ViewListIcon from "@mui/icons-material/ViewList";
+import WindowIcon from "@mui/icons-material/Window";
+import { Button } from "@mui/material";
 ///
-import ProductPopup from "./ProductPopup";
+import GridCard from "./GridCard";
+import LineCard from "./LineCard";
 
-function BasicCard({ item }) {
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => setOpen(true);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <>
-      <ProductPopup product={item} onClose={handleClose} open={open} />
-      <Card
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          maxWidth: 250,
-          maxHeight: 400,
-          m: 2,
-          cursor: "pointer",
-          boxShadow: "none",
-          ":hover": {
-            boxShadow:
-              "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.2), 0px 1px 3px 0px rgba(0,0,0,0.2)",
-          },
-        }}
-        onClick={handleClickOpen}
-      >
-        <CardContent sx={{ p: 0 }}>
-          <CardMedia
-            component="img"
-            sx={{
-              width: 250,
-              height: 250,
-              objectFit: "contain",
-            }}
-            image={item.images[0]}
-            alt={item.title}
-          />
-          <Typography sx={{ fontSize: 14 }}>{item.title}</Typography>
-          <Typography
-            sx={{
-              height: 60,
-              overflow: "hidden",
-              mb: 1,
-              fontSize: "0.8rem",
-            }}
-            color="text.secondary"
-          >
-            {item.description}
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              height: 20,
-            }}
-          >
-            <Typography
-              sx={{ mx: 1, fontSize: "1rem", fontWeight: 600 }}
-              variant="body2"
-            >
-              ${item.price}
-            </Typography>
-            <Typography sx={{ mx: 2, fontSize: "0.9rem" }} variant="body2">
-              Stock: {item.stock}
-            </Typography>
-          </Box>
-        </CardContent>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Typography sx={{ mx: 1, fontSize: "0.8rem" }} variant="body2">
-            Rating: {item.rating}
-          </Typography>
-          <CardActions>
-            <Button
-              sx={{ textTransform: "none", p: 0 }}
-              size="small"
-              variant="outlined"
-              color="secondary"
-              onClick={handleClickOpen}
-            >
-              <FavoriteBorderIcon sx={{ px: 0.5 }} fontSize="small" />
-              <Typography sx={{ mx: 1, fontSize: "0.9rem", fontWeight: 600 }}>
-                Watch
-              </Typography>
-            </Button>
-          </CardActions>
-        </Box>
-      </Card>
-    </>
-  );
-}
-
-function MainContent({ products, filters, lightTheme }) {
+function MainContent({ products, filters, search, setcartContent }) {
+  const [goodsDisplay, setgoodsDisplay] = useState("grid");
   const categorieFilterEnabled = Object.values(filters).indexOf(true) !== -1;
   return (
-    <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
-      {products
-        .filter((item) =>
-          categorieFilterEnabled ? filters[item.category] : true
-        )
-        .map((item, index) => {
-          return <BasicCard key={index} item={item} lightTheme={lightTheme} />;
-        })}
+    <Box>
+      <Box sx={{ display: "flex", mt: 2, ml: 2 }}>
+        <Button
+          variant="outlined"
+          sx={{
+            borderTop: goodsDisplay === "line" && "none",
+            bgcolor: goodsDisplay === "grid" && "rgba(34,100,209,0.1)",
+            boxShadow:
+              goodsDisplay === "line" &&
+              "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.2),3px 3px 0px 0px rgba(0,0,0,0.3)",
+          }}
+          color="secondary"
+          onClick={() => setgoodsDisplay("line")}
+        >
+          <ViewListIcon
+            color="secondary"
+            sx={{ color: goodsDisplay === "grid" && "#9596a3" }}
+          />
+        </Button>
+        <Button
+          variant="outlined"
+          sx={{
+            borderTop: goodsDisplay === "grid" && "none",
+            bgcolor: goodsDisplay === "line" && "rgba(34,100,209,0.1)",
+            boxShadow:
+              goodsDisplay === "grid" &&
+              "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.2), 3px 3px 0px 0px rgba(0,0,0,0.3)",
+          }}
+          color="secondary"
+          onClick={() => setgoodsDisplay("grid")}
+        >
+          <WindowIcon
+            color="secondary"
+            sx={{ color: goodsDisplay === "line" && "#9596a3" }}
+          />
+        </Button>
+      </Box>
+      <Box
+        sx={
+          goodsDisplay === "grid"
+            ? {
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "start",
+              }
+            : { overflow: "hidden" }
+        }
+      >
+        {products
+          .filter((item) => {
+            return search.toLowerCase() === ""
+              ? item
+              : item.title.toLowerCase().includes(search);
+          })
+          .filter((item) =>
+            categorieFilterEnabled ? filters[item.category] : true
+          )
+          .map((item, index) => {
+            return goodsDisplay === "grid" ? (
+              <GridCard
+                key={index}
+                item={item}
+                setcartContent={setcartContent}
+              />
+            ) : (
+              <LineCard
+                key={index}
+                item={item}
+                setcartContent={setcartContent}
+              />
+            );
+          })}
+      </Box>
     </Box>
   );
 }
