@@ -7,7 +7,13 @@ import { Button } from "@mui/material";
 import GridCard from "./GridCard";
 import LineCard from "./LineCard";
 
-function MainContent({ products, filters, search, setcartContent }) {
+function MainContent({
+  products,
+  filters,
+  search,
+  setcartContent,
+  cartContent,
+}) {
   const [goodsDisplay, setgoodsDisplay] = useState("grid");
   const categorieFilterEnabled = Object.values(filters).indexOf(true) !== -1;
   return (
@@ -22,7 +28,6 @@ function MainContent({ products, filters, search, setcartContent }) {
               goodsDisplay === "line" &&
               "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.2),3px 3px 0px 0px rgba(0,0,0,0.3)",
           }}
-          color="secondary"
           onClick={() => setgoodsDisplay("line")}
         >
           <ViewListIcon
@@ -39,7 +44,6 @@ function MainContent({ products, filters, search, setcartContent }) {
               goodsDisplay === "grid" &&
               "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.2), 3px 3px 0px 0px rgba(0,0,0,0.3)",
           }}
-          color="secondary"
           onClick={() => setgoodsDisplay("grid")}
         >
           <WindowIcon
@@ -73,12 +77,14 @@ function MainContent({ products, filters, search, setcartContent }) {
               <GridCard
                 key={index}
                 item={item}
+                cartContent={cartContent}
                 setcartContent={setcartContent}
               />
             ) : (
               <LineCard
                 key={index}
                 item={item}
+                cartContent={cartContent}
                 setcartContent={setcartContent}
               />
             );

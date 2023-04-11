@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 
-function ProductPopup({ product, onClose, open, setcartContent }) {
+function ProductPopup({ product, onClose, open, cartContent, setcartContent }) {
   return (
     <Dialog onClose={onClose} open={open}>
       <img src={product.images[0]} />
@@ -28,7 +28,16 @@ function ProductPopup({ product, onClose, open, setcartContent }) {
       <DialogActions>
         <Button
           color="secondary"
-          onClick={() => setcartContent((prev) => [...prev, product])}
+          onClick={() => {
+            const checkCart = [...cartContent].filter((item) => {
+              return item.title == product.title;
+            });
+            if (checkCart.length !== 0) {
+              console.log("Item is already in cart");
+            } else {
+              setcartContent((prev) => [...prev, product]);
+            }
+          }}
         >
           Add to cart
         </Button>

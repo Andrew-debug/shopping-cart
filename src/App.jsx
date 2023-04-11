@@ -58,6 +58,7 @@ function App() {
           products={data.products}
           filters={filters}
           search={search}
+          cartContent={cartContent}
           setcartContent={setcartContent}
         />
       </div>

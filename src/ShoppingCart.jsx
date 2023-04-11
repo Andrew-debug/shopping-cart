@@ -4,14 +4,14 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 //////////
-import LineCard from "./LineCard";
+// import LineCard from "./LineCard";
+import ShoppingCartItem from "./ShoppingCartItem";
 
 function ShoppingCart({ cartContent, setcartContent, onClose, openCart }) {
   const [goodCount, setgoodCount] = useState(1);
@@ -22,33 +22,40 @@ function ShoppingCart({ cartContent, setcartContent, onClose, openCart }) {
           {cartContent.map((item, index) => {
             const itemIndex = cartContent.indexOf(item);
             return (
-              <Box key={index} sx={{ display: "flex" }}>
-                <LineCard item={item} />
-                <Box sx={{ ml: -2, flexBasis: "40%", display: "flex" }}>
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <Button
-                      color="secondary"
-                      onClick={() => setgoodCount((prev) => prev + 1)}
-                    >
-                      <AddIcon />
-                    </Button>
-                    <Typography sx={{ mx: 1 }}>{goodCount}</Typography>
-                    <Button
-                      color="secondary"
-                      onClick={() => {
-                        if (goodCount > 1) {
-                          setgoodCount((prev) => prev - 1);
-                        } else {
-                          cartContent.splice(itemIndex, 1);
-                          setcartContent([...cartContent]);
-                        }
-                      }}
-                    >
-                      <RemoveIcon />
-                    </Button>
-                  </Box>
-                </Box>
-              </Box>
+              <ShoppingCartItem
+                key={index}
+                item={item}
+                cartContent={cartContent}
+                setcartContent={setcartContent}
+                itemIndex={itemIndex}
+              />
+              //   <Box key={index} sx={{ display: "flex" }}>
+              //     <LineCard item={item} />
+              //     <Box sx={{ ml: -2, flexBasis: "40%", display: "flex" }}>
+              //       <Box sx={{ display: "flex", alignItems: "center" }}>
+              //         <Button
+              //           color="secondary"
+              //           onClick={() => setgoodCount(goodCount + 1)}
+              //         >
+              //           <AddIcon />
+              //         </Button>
+              //         <Typography sx={{ mx: 1 }}>{goodCount}</Typography>
+              //         <Button
+              //           color="secondary"
+              //           onClick={() => {
+              //             if (goodCount > 1) {
+              //               setgoodCount(goodCount - 1);
+              //             } else {
+              //               cartContent.splice(itemIndex, 1);
+              //               setcartContent([...cartContent]);
+              //             }
+              //           }}
+              //         >
+              //           <RemoveIcon />
+              //         </Button>
+              //       </Box>
+              //     </Box>
+              //   </Box>
             );
           })}
         </>

@@ -11,11 +11,11 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
+import { useState } from "react";
 //////////
 import logoDark from "./assets/images/LogoDark.png";
 import logoLight from "./assets/images/logoLight.png";
 import ShoppingCart from "./ShoppingCart";
-import { useState } from "react";
 const centerFlex = {
   display: "flex",
   justifyContent: "center",

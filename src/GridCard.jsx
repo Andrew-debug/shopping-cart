@@ -10,7 +10,7 @@ import Stack from "@mui/material/Stack";
 import { Button, CardActions } from "@mui/material";
 ////
 import ProductPopup from "./ProductPopup";
-function GridCard({ item, setcartContent }) {
+function GridCard({ item, cartContent, setcartContent }) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => setOpen(true);
@@ -22,9 +22,10 @@ function GridCard({ item, setcartContent }) {
     <>
       <ProductPopup
         product={item}
-        setcartContent={setcartContent}
         onClose={handleClose}
         open={open}
+        cartContent={cartContent}
+        setcartContent={setcartContent}
       />
       <Card
         sx={{
