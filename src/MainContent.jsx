@@ -58,7 +58,7 @@ function MainContent({
             ? {
                 display: "flex",
                 flexWrap: "wrap",
-                justifyContent: "start",
+                justifyContent: { xs: "center", sm: "flex-start" },
               }
             : { overflow: "hidden" }
         }

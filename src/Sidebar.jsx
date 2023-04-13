@@ -8,7 +8,8 @@ import Select from "@mui/material/Select";
 export default function Sidebar({ filters, setfilters, sort, setSort }) {
   return (
     <Box
-      style={{
+      sx={{
+        display: { xs: "none", sm: "block" },
         margin: "20px 10px",
         boxShadow: "5px 5px 5px rgba(0,0,0,0.1)",
       }}

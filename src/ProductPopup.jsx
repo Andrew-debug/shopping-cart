@@ -33,7 +33,11 @@ function ProductPopup({ product, onClose, open, cartContent, setcartContent }) {
               return item.title == product.title;
             });
             if (checkCart.length !== 0) {
-              console.log("Item is already in cart");
+              if (!product.count) {
+                product.count = 1;
+              } else {
+                product.count += 1;
+              }
             } else {
               setcartContent((prev) => [...prev, product]);
             }
