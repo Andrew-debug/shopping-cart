@@ -4,30 +4,33 @@ import RemoveIcon from "@mui/icons-material/Remove";
 ///
 import LineCard from "./LineCard";
 
-function ShoppingCartItem({ item, cartContent, setcartContent, index }) {
+function ShoppingCartItem({ product, cartContent, setcartContent }) {
   return (
     <Box sx={{ display: "flex" }}>
-      <LineCard item={item} />
+      <LineCard item={product} />
       <Box sx={{ ml: -2, flexBasis: "40%", display: "flex" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Button
             color="secondary"
             onClick={() => {
-              cartContent[index].count += 1;
-              setcartContent([...cartContent]);
+              product.count += 1;
+              setcartContent({ ...cartContent, [product.id]: product });
             }}
           >
             <AddIcon />
           </Button>
-          <Typography sx={{ mx: 1 }}>{item.count}</Typography>
+          <Typography sx={{ mx: 1 }}>{product.count}</Typography>
           <Button
             color="secondary"
             onClick={() => {
-              if (item.count > 1) {
-                cartContent[index].count -= 1;
+              if (product.count > 1) {
+                setcartContent({
+                  ...cartContent,
+                  [product.id]: { ...product, count: product.count - 1 },
+                });
               } else {
-                cartContent.splice(index, 1);
-                setcartContent([...cartContent]);
+                delete cartContent[product.id];
+                setcartContent({ ...cartContent });
               }
             }}
           >

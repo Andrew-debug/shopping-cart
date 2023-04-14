@@ -12,26 +12,27 @@ import ShoppingCartItem from "./ShoppingCartItem";
 function ShoppingCart({ cartContent, setcartContent, onClose, openCart }) {
   return (
     <Dialog onClose={onClose} open={openCart}>
-      {cartContent.length > 0 ? (
+      {Object.keys(cartContent).length > 0 ? (
         <>
-          {cartContent.map((item, index) => {
-            return (
-              <ShoppingCartItem
-                key={index}
-                item={item}
-                cartContent={cartContent}
-                setcartContent={setcartContent}
-                index={index}
-              />
-            );
-          })}
+          {Object.entries(cartContent).map(([key, value]) => (
+            <ShoppingCartItem
+              key={key}
+              product={value}
+              cartContent={cartContent}
+              setcartContent={setcartContent}
+            />
+          ))}
         </>
       ) : (
         <Box>no goods</Box>
       )}
       <DialogContent>
         <Typography>
-          In total: ${cartContent.reduce((a, b) => a + b.price * b.count, 0)}
+          In total: $
+          {Object.values(cartContent).reduce(
+            (a, b) => a + b.price * b.count,
+            0
+          )}
         </Typography>
       </DialogContent>
       <DialogActions>

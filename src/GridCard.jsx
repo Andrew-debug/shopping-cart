@@ -10,23 +10,9 @@ import Stack from "@mui/material/Stack";
 import { Button, CardActions } from "@mui/material";
 ////
 import ProductPopup from "./ProductPopup";
-function GridCard({ item, cartContent, setcartContent }) {
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => setOpen(true);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+function GridCard({ item, handleClickOpen }) {
   return (
     <>
-      <ProductPopup
-        product={item}
-        onClose={handleClose}
-        open={open}
-        cartContent={cartContent}
-        setcartContent={setcartContent}
-      />
       <Card
         sx={{
           display: "flex",
@@ -42,7 +28,7 @@ function GridCard({ item, cartContent, setcartContent }) {
               "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.2), 0px 1px 3px 0px rgba(0,0,0,0.2)",
           },
         }}
-        onClick={handleClickOpen}
+        onClick={() => handleClickOpen(item)}
       >
         <CardContent sx={{ p: 0 }}>
           <CardMedia

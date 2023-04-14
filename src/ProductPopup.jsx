@@ -29,17 +29,19 @@ function ProductPopup({ product, onClose, open, cartContent, setcartContent }) {
         <Button
           color="secondary"
           onClick={() => {
-            const checkCart = [...cartContent].filter((item) => {
-              return item.id == product.id;
-            });
-            if (checkCart.length !== 0) {
-              if (!product.count) {
-                product.count = 1;
-              } else {
-                product.count += 1;
-              }
+            if (Object.keys(cartContent).includes(product.id.toString())) {
+              setcartContent({
+                ...cartContent,
+                [product.id]: {
+                  ...product,
+                  count: cartContent[product.id].count + 1,
+                },
+              });
             } else {
-              setcartContent((prev) => [...prev, { ...product, count: 1 }]);
+              setcartContent({
+                ...cartContent,
+                [product.id]: { ...product, count: 1 },
+              });
             }
           }}
         >

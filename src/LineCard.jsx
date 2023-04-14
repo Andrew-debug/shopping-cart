@@ -8,28 +8,14 @@ import { CardActionArea } from "@mui/material";
 ///
 import ProductPopup from "./ProductPopup";
 
-function LineCard({ item, cartContent, setcartContent }) {
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => setOpen(true);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+function LineCard({ item, handleClickOpen }) {
   return (
     <>
-      <ProductPopup
-        product={item}
-        onClose={handleClose}
-        open={open}
-        cartContent={cartContent}
-        setcartContent={setcartContent}
-      />
       <Card
         sx={{
           m: 2,
         }}
-        onClick={handleClickOpen}
+        onClick={() => handleClickOpen(item)}
       >
         <CardActionArea
           sx={{

@@ -65,13 +65,12 @@ function App() {
   const [search, setsearch] = useState("");
   const [cartContent, setcartContent] = useState(() => {
     const localValue = localStorage.getItem("ITEMS");
-    if (localValue === null) return [];
+    if (localValue === null) return {};
     return JSON.parse(localValue);
   });
   useEffect(() => {
     localStorage.setItem("ITEMS", JSON.stringify(cartContent));
   }, [cartContent]);
-
   return (
     <ThemeProvider theme={lightTheme ? createTheme(light) : createTheme(dark)}>
       <CssBaseline />
