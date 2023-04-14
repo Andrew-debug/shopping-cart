@@ -69,10 +69,8 @@ function App() {
     return JSON.parse(localValue);
   });
   useEffect(() => {
-    cartContent.map((item) => (item.count = 1));
     localStorage.setItem("ITEMS", JSON.stringify(cartContent));
   }, [cartContent]);
-  console.log(cartContent);
 
   return (
     <ThemeProvider theme={lightTheme ? createTheme(light) : createTheme(dark)}>

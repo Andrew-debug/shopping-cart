@@ -30,7 +30,7 @@ function ProductPopup({ product, onClose, open, cartContent, setcartContent }) {
           color="secondary"
           onClick={() => {
             const checkCart = [...cartContent].filter((item) => {
-              return item.title == product.title;
+              return item.id == product.id;
             });
             if (checkCart.length !== 0) {
               if (!product.count) {
@@ -39,7 +39,7 @@ function ProductPopup({ product, onClose, open, cartContent, setcartContent }) {
                 product.count += 1;
               }
             } else {
-              setcartContent((prev) => [...prev, product]);
+              setcartContent((prev) => [...prev, { ...product, count: 1 }]);
             }
           }}
         >

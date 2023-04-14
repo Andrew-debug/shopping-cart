@@ -13,8 +13,8 @@ function ShoppingCartItem({ item, cartContent, setcartContent, index }) {
           <Button
             color="secondary"
             onClick={() => {
-              item.count += 1;
-              console.log(item.count);
+              cartContent[index].count += 1;
+              setcartContent([...cartContent]);
             }}
           >
             <AddIcon />
@@ -24,7 +24,7 @@ function ShoppingCartItem({ item, cartContent, setcartContent, index }) {
             color="secondary"
             onClick={() => {
               if (item.count > 1) {
-                item.count -= 1;
+                cartContent[index].count -= 1;
               } else {
                 cartContent.splice(index, 1);
                 setcartContent([...cartContent]);
