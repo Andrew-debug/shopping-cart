@@ -40,7 +40,7 @@ function ShoppingCart({ cartContent, setcartContent, onClose, openCart }) {
           color="secondary"
           variant="outlined"
           sx={{ textDecoration: "none" }}
-          disabled={cartContent.length > 0 ? false : true}
+          disabled={Object.keys(cartContent).length > 0 ? false : true}
         >
           Proceed with purchase
         </Button>

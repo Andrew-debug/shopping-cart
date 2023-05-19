@@ -7,6 +7,7 @@ import {
   Typography,
   InputAdornment,
 } from "@mui/material";
+import Badge from "@mui/material/Badge";
 import SearchIcon from "@mui/icons-material/Search";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
@@ -58,6 +59,7 @@ export default function Header({
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+  const shopCartLength = Object.keys(cartContent).length;
   return (
     <>
       <ShoppingCart
@@ -192,19 +194,21 @@ export default function Header({
             >
               Sign in
             </Button>
-            <Button
-              variant="outlined"
-              color="secondary"
-              sx={{
-                p: { xs: "5px", lg: "5px 15px" },
-                mr: 2,
-                fontWeight: "600",
-                textTransform: "none",
-              }}
-              onClick={handleClickOpenCart}
-            >
-              My cart
-            </Button>
+            <Badge badgeContent={shopCartLength} color="secondary">
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{
+                  p: { xs: "5px", lg: "5px 15px" },
+                  mr: 2,
+                  fontWeight: "600",
+                  textTransform: "none",
+                }}
+                onClick={handleClickOpenCart}
+              >
+                My cart
+              </Button>
+            </Badge>
           </Box>
           <Button
             variant="outlined"
